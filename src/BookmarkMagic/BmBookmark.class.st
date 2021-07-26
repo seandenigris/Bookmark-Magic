@@ -1,0 +1,97 @@
+"
+Example - Add bookmark:
+	| bm |
+	bm := MbBookmark new
+		url: 'https://www.flickr.com/services/api/' asUrl;
+		tags: #(#flickr #api);
+		yourself.
+	self db add: bm
+"
+Class {
+	#name : #BmBookmark,
+	#superclass : #Object,
+	#instVars : [
+		'url',
+		'tags'
+	],
+	#classInstVars : [
+		'db'
+	],
+	#category : 'BookmarkMagic-Core'
+}
+
+{ #category : #adding }
+BmBookmark class >> add: aURL [
+	self db add: (self new url: aURL; yourself)
+]
+
+{ #category : #accessing }
+BmBookmark class >> db [
+	^ db ifNil: [ db := OrderedCollection new ]
+]
+
+{ #category : #accessing }
+BmBookmark class >> db: anObject [
+	db := anObject
+]
+
+{ #category : #persistence }
+BmBookmark class >> restoreFrom: anObject [
+
+	db := anObject.
+]
+
+{ #category : #persistence }
+BmBookmark class >> spData [
+	^ db
+]
+
+{ #category : #comparing }
+BmBookmark >> = rhs [
+
+	^ self url = rhs url
+]
+
+{ #category : #comparing }
+BmBookmark >> hash [
+
+	^ self url hash
+]
+
+{ #category : #'instance creation' }
+BmBookmark >> open [
+
+	Smalltalk tools webBrowser openOnUrl: self url
+]
+
+{ #category : #printing }
+BmBookmark >> printOn: aStream [
+
+	url ifNotNil: [ aStream print: url; space ].
+	tags ifNotNil: [ 
+		tags
+			do: [ :tag | aStream print: tag ]
+			separatedBy: [ aStream space ] ]
+]
+
+{ #category : #accessing }
+BmBookmark >> tags [
+	^ tags
+]
+
+{ #category : #accessing }
+BmBookmark >> tags: aCollection [
+	"aCollection - can be symbols or Tags"
+
+	tags := aCollection collect: #asMbTag
+]
+
+{ #category : #accessing }
+BmBookmark >> url [
+	^ url
+]
+
+{ #category : #accessing }
+BmBookmark >> url: anObject [
+	url := anObject
+]
