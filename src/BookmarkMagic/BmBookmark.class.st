@@ -17,7 +17,7 @@ Class {
 	#classInstVars : [
 		'db'
 	],
-	#category : 'BookmarkMagic-Core'
+	#category : #'BookmarkMagic-Core'
 }
 
 { #category : #adding }
@@ -46,10 +46,15 @@ BmBookmark class >> spData [
 	^ db
 ]
 
+{ #category : #accessing }
+BmBookmark >> <= rhs [
+	^ self url host <= rhs url host
+]
+
 { #category : #comparing }
 BmBookmark >> = rhs [
 
-	^ self url = rhs url
+	^ (self respondsTo: #url) and: [ url = rhs url ]
 ]
 
 { #category : #comparing }
@@ -76,7 +81,7 @@ BmBookmark >> printOn: aStream [
 
 { #category : #accessing }
 BmBookmark >> tags [
-	^ tags
+	^ tags ifNil: [ tags := SortedCollection sortUsing:  #name ascending ]
 ]
 
 { #category : #accessing }
