@@ -14,9 +14,6 @@ Class {
 		'url',
 		'tags'
 	],
-	#classInstVars : [
-		'db'
-	],
 	#category : #'BookmarkMagic-Core'
 }
 
