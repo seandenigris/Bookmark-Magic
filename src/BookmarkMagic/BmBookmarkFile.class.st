@@ -10,6 +10,18 @@ Class {
 	#category : #'BookmarkMagic-Core'
 }
 
+{ #category : #persistence }
+BmBookmarkFile class >> restoreFrom: anObject [
+
+	UniqueInstance := anObject.
+]
+
+{ #category : #persistence }
+BmBookmarkFile class >> spData [
+
+	^ UniqueInstance
+]
+
 { #category : #accessing }
 BmBookmarkFile class >> uniqueInstance [
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]

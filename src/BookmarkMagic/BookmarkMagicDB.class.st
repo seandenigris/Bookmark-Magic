@@ -13,5 +13,5 @@ BookmarkMagicDB class >> backupDirectoryParent [
 { #category : #'override in subclasses' }
 BookmarkMagicDB class >> schema [
 
-	^ { BmBookmark }.
+	^ { BmBookmarkFile }.
 ]

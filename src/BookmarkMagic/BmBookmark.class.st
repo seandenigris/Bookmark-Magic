@@ -35,17 +35,6 @@ BmBookmark class >> db: anObject [
 	db := anObject
 ]
 
-{ #category : #persistence }
-BmBookmark class >> restoreFrom: anObject [
-
-	db := anObject.
-]
-
-{ #category : #persistence }
-BmBookmark class >> spData [
-	^ db
-]
-
 { #category : #accessing }
 BmBookmark >> <= rhs [
 	^ self url host <= rhs url host
