@@ -4,6 +4,11 @@ Class {
 	#category : #BaselineOfBookmarkMagic
 }
 
+{ #category : #testing }
+BaselineOfBookmarkMagic class >> isDynabook [
+	^ true
+]
+
 { #category : #baseline }
 BaselineOfBookmarkMagic >> baseline: spec [
 	<baseline>
