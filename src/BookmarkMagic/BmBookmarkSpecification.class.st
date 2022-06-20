@@ -13,5 +13,5 @@ BmBookmarkSpecification >> testCreateBookmark [
 		tags: #(#flickr #api);
 		yourself.
 		
-	(bm tags includes: (BmTag named: #api)) should beTrue
+	(bm tags includes: (BmTag named: #api)) should be: true
 ]
