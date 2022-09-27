@@ -43,10 +43,10 @@ BmBookmarkFile >> bookmarks [
 ]
 
 { #category : #'*BookmarkMagic-GToolkit' }
-BmBookmarkFile >> gtSpotterNewBookmarkFor: aStep [
+BmBookmarkFile >> gtSpotterNewBookmarkFor: aSearch [
 	<gtSearch>
 	
-	aStep listProcessor
+	^ aSearch list
 		title: 'New Bookmark';
 		priority: 50;
 		itemName: [ :input | 'Add bookmark: ', input ];
