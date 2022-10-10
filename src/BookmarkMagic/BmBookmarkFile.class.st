@@ -46,20 +46,19 @@ BmBookmarkFile >> bookmarks [
 BmBookmarkFile >> gtSpotterNewBookmarkFor: aSearch [
 	<gtSearch>
 	
-	^ aSearch list
+	^ aSearch explicit
 		title: 'New Bookmark';
 		priority: 50;
-		itemName: [ :input | 'Add bookmark: ', input ];
-		previewObject: [ :input | Object new "BmBookmark new url: input asUrl; yourself" ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtNullFilter 
-			item: [ :filter :context | 
-				| isExisting |
-				isExisting := self bookmarks anySatisfy: [ :e | 
-					e url asString = context textTrimmed ].
-				(isExisting not and: [ context textTrimmed beginsWith: 'http' ]) ifTrue: [ 
-					filter value: context textTrimmed ] ];
-		send: [ :input :spotterStep | self addBookmarkTo: input asUrl ]
+		itemName: [ :result | '+ ', result gtDisplayText ];
+		search: [ :context | 
+			| isExisting input |
+			input := context searchQuery trimBoth.
+			isExisting := self bookmarks anySatisfy: [ :e | 
+				e url asString = input ].
+				(isExisting not and: [ context textTrimmed beginsWith: 'http' ]) 
+					ifTrue: [ { input asUrl } ]
+					ifFalse: [ {} ] ];
+		itemSpawnAfter: [ :result | self addBookmarkTo: result asUrl ]
 ]
 
 { #category : #'*BookmarkMagic-GToolkit' }
