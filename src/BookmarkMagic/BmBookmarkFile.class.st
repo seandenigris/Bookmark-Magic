@@ -58,7 +58,7 @@ BmBookmarkFile >> gtSpotterNewBookmarkFor: aSearch [
 				(isExisting not and: [ context textTrimmed beginsWith: 'http' ]) 
 					ifTrue: [ { input asUrl } ]
 					ifFalse: [ {} ] ];
-		itemSpawnAfter: [ :result | self addBookmarkTo: result asUrl ]
+		send: [ :result | self addBookmarkTo: result asUrl ]
 ]
 
 { #category : #'*BookmarkMagic-GToolkit' }
