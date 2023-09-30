@@ -86,7 +86,7 @@ BmBookmarkFile >> gtViewTagsOn: aView [
 				ifTrue: [ self bookmarks select: [ :bm | bm tags includes: each ] ]
 				ifFalse: [ #() ] ];
 		itemText: #displayString;
-		actionUpdateButtonTooltip: 'Update'.
+		actionUpdateButton
 ]
 
 { #category : #accessing }
