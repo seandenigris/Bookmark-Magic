@@ -8,11 +8,11 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-  #  branches: [ master ]
-  #pull_request:
-  #  branches: [ master ]
-    tags:
-      - "v*.*.*"
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    #tags:
+     # - "v*.*.*"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,10 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         timeout-minutes: 15
-      - name: Load Image and Run Tests
-        run: ls
-      - name: Load Image and Run Tests
-        run: pwd
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
