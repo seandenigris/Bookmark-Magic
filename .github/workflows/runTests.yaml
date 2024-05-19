@@ -23,6 +23,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: macos-14
+
+    env:
+      PROJECT_NAME: BookmarkMagic-${{ matrix.smalltalk }}
     
     strategy:
       matrix:
@@ -33,11 +36,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      
+      # Prepares SmalltalkCI
       - uses: hpi-swa/setup-smalltalkCI@v1
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
-      - name: Load Image and Run Tests
+      - name: Load Project and Run Tests
         run: smalltalkci -s ${{ matrix.smalltalk }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,8 +54,20 @@ jobs:
           files: |
             **/*.image
             **/GlamorousToolkit*
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          name: ${{matrix.os}}-${{matrix.smalltalk}}
-#          token: ${{ secrets.CODECOV_TOKEN }}
+      # Here we zip the result of the build to be able to keep the artefacts
+      - name: package
+        run: |
+          mv /home/runner/.smalltalkCI/_builds/* .
+          mv TravisCI.image $PROJECT_NAME.image
+          mv TravisCI.changes $PROJECT_NAME.changes
+          echo ${${{ matrix.smalltalk }}} | sed -e 's/.*\-//g ; s/\..*//g ; s/$/0/' > pharo.version
+          zip -r $PROJECT_NAME.zip $PROJECT_NAME.image $PROJECT_NAME.changes *.sources pharo.version
+          ls
+        
+      #Save the artefact of the build under "continuous" tag
+      - name: Update release
+        uses: johnwbyrd/update-release@v1.0.0
+        with:
+          release: 'continuous'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: ${{ env.PROJECT_NAME }}.zip
