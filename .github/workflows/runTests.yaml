@@ -46,6 +46,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         timeout-minutes: 15
       # Here we zip the result of the build to be able to keep the artefacts
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: package
         run: |
           mv /home/runner/.smalltalkCI/_builds/* .
@@ -62,8 +64,6 @@ jobs:
           release: 'continuous'
           token: ${{ secrets.GITHUB_TOKEN }}
           files: ${{ env.PROJECT_NAME }}.zip
-      #- name: Setup tmate session
-      #  uses: mxschmitt/action-tmate@v3
       #- name: Release
       #  uses: softprops/action-gh-release@v2
       #  if: startsWith(github.ref, 'refs/tags/')
