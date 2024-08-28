@@ -1,6 +1,4 @@
-## Adapted from:
-##    - Roassal3 - https://github.com/ObjectProfile/Roassal3/blob/36b92db2055501c87f2ccea5573fc83fb4916884/.github/workflows/runTests.yml
-##    - Willow-Playground - https://github.com/ba-st/Willow-Playground/blob/2898e1afbdd5a6011721e5a640225f81ae895de2/.github/workflows/build.yml0
+# Adapted from https://github.com/seandenigris/Pharo-Enhancements/blob/master/.github/workflows/ci.yaml
 
 name: CI
 
@@ -11,55 +9,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    #tags:
-     # - "v*.*.*"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Adapted from https://docs.github.com/en/actions/using-workflows/reusing-workflows
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: macos-14
-
-    env:
-      PROJECT_NAME: BookmarkMagic-${{ matrix.smalltalk }}
-    
-    strategy:
-      matrix:
-        smalltalk: [ Pharo64-11 ]
-    name: ${{ matrix.smalltalk }}
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      # Prepares SmalltalkCI
-      - uses: hpi-swa/setup-smalltalkCI@v1
-        with:
-          smalltalk-image: ${{ matrix.smalltalk }}
-      - name: Load Project and Run Tests
-        run: smalltalkci -s ${{ matrix.smalltalk }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        timeout-minutes: 15
-      # Here we zip the result of the build to be able to keep the artefacts
-      - name: Package
-        run: ${GITHUB_WORKSPACE}/scripts/package_pharo.sh ${PROJECT_NAME} ${{ matrix.smalltalk }} ~/.smalltalkCI/_builds
-      #- name: Setup tmate session
-      #  uses: mxschmitt/action-tmate@v3
-      #Save the artefact of the build under "continuous" tag
-      #- name: Update release
-      #  uses: johnwbyrd/update-release@v1.0.0
-      #  with:
-      #    release: 'continuous'
-      #    token: ${{ secrets.GITHUB_TOKEN }}
-      #    files: ${{ env.PROJECT_NAME }}.zip
-      - name: Release
-        uses: softprops/action-gh-release@v2
-      #  if: startsWith(github.ref, 'refs/tags/')
-        with:
-          tag_name: continuous
-          files: ${{ env.PROJECT_NAME }}.zip
+  test-and-release:
+    uses: seandenigris/Pharo-Enhancements/.github/workflows/ci_reusable.yaml@master
+    with:
+      project-name: BookmarkMagic
