@@ -14,16 +14,16 @@ BaselineOfBookmarkMagic >> baseline: spec [
 	<baseline>
 	spec for: #common do: [ 
 		spec 
-			baseline: 'ExternalWebBrowser' with: [
+			baseline: #'ExternalWebBrowser' with: [
 				spec repository: 'github://seandenigris/Pharo-Web-Browser' ];
-			baseline: 'Mocketry' with: [
+			baseline: #'Mocketry' with: [
 				spec repository: 'github://dionisiydk/Mocketry' ];
-			baseline: 'PharoEnhancements' with: [
+			baseline: #'PharoEnhancements' with: [
 				spec repository: 'github://seandenigris/Pharo-Enhancements' ];
-			baseline: 'SimplePersistence' with: [
+			baseline: #'SimplePersistence' with: [
 				spec
 					repository: 'github://seandenigris/Simple-Persistence' ].
 			spec
-				package: 'BookmarkMagic'
-				with: [ spec requires: #('ExternalWebBrowser' 'Mocketry' 'PharoEnhancements' 'SimplePersistence') ] ]
+				package: #'BookmarkMagic'
+				with: [ spec requires: #(#'ExternalWebBrowser' #'Mocketry' #'PharoEnhancements' #'SimplePersistence') ] ]
 ]
