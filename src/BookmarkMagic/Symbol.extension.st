@@ -1,6 +1,6 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*BookmarkMagic' }
+{ #category : '*BookmarkMagic' }
 Symbol >> asMbTag [
 
 	^ BmTag named: self

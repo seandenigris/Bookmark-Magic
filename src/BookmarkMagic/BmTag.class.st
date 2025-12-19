@@ -1,13 +1,15 @@
 Class {
-	#name : #BmTag,
-	#superclass : #Object,
+	#name : 'BmTag',
+	#superclass : 'Object',
 	#instVars : [
 		'name'
 	],
-	#category : 'BookmarkMagic-Core'
+	#category : 'BookmarkMagic-Core',
+	#package : 'BookmarkMagic',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BmTag class >> named: aString [ 
 
 	^ self new
@@ -15,34 +17,34 @@ BmTag class >> named: aString [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BmTag >> = rhs [
 
 	^ self name = rhs name
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmTag >> asMbTag [
 	^ self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BmTag >> hash [
 
 	^ self name hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BmTag >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BmTag >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BmTag >> printOn: aStream [
 
 	name ifNotNil: [ aStream print: name ].

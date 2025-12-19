@@ -3,8 +3,8 @@ self uniqueInstance start.
 self uniqueInstance stop.
 "
 Class {
-	#name : #BmImportServer,
-	#superclass : #Object,
+	#name : 'BmImportServer',
+	#superclass : 'Object',
 	#instVars : [
 		'connectionSocket',
 		'isRunning',
@@ -13,10 +13,12 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'BookmarkMagic-Core'
+	#category : 'BookmarkMagic-Core',
+	#package : 'BookmarkMagic',
+	#tag : 'Core'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BmImportServer class >> initialize [
 
 	Smalltalk
@@ -24,26 +26,26 @@ BmImportServer class >> initialize [
 		addToShutDownList: self.
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 BmImportServer class >> shutDown: quitting [
 
 	quitting ifTrue: [ self uniqueInstance stop ].
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 BmImportServer class >> startUp: resuming [
 
 	"only handle when lauching a new image"
 	"resuming ifTrue: [ self uniqueInstance start ]."
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BmImportServer class >> uniqueInstance [
 
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BmImportServer >> importBookmarkFor: aUrl [
 
 	| bookmark |
@@ -51,7 +53,7 @@ BmImportServer >> importBookmarkFor: aUrl [
 	BmBookmark db add: bookmark.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> initialize [
 
 	super initialize.
@@ -59,7 +61,7 @@ BmImportServer >> initialize [
 	self isRunning: false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> interactOnConnection [
 
 	| interactionSocket |
@@ -67,7 +69,7 @@ BmImportServer >> interactOnConnection [
 	[self interactUsing: interactionSocket] fork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BmImportServer >> interactUsing: interactionSocket [
 
 	| receivedData |
@@ -78,19 +80,19 @@ BmImportServer >> interactUsing: interactionSocket [
 	] ensure: [ interactionSocket closeAndDestroy ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> isRunning [
 
 	^ isRunningLock critical: [ isRunning ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> isRunning: aBoolean [
 
 	isRunningLock critical: [ isRunning := aBoolean ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> serve [
 
 	[ [ self isRunning ]
@@ -98,7 +100,7 @@ BmImportServer >> serve [
 		ensure: [ connectionSocket closeAndDestroy ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> start [
 
 	isRunningLock critical: [
@@ -109,7 +111,7 @@ BmImportServer >> start [
 	[ self serve ] fork
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BmImportServer >> stop [
 
 	self isRunning: false

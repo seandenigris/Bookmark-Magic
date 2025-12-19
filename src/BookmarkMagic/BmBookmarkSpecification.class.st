@@ -1,10 +1,12 @@
 Class {
-	#name : #BmBookmarkSpecification,
-	#superclass : #TestCase,
-	#category : #'BookmarkMagic-Core'
+	#name : 'BmBookmarkSpecification',
+	#superclass : 'TestCase',
+	#category : 'BookmarkMagic-Core',
+	#package : 'BookmarkMagic',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BmBookmarkSpecification >> testCreateBookmark [
 
 	| bm |

@@ -1,16 +1,18 @@
 Class {
-	#name : #BookmarkMagicDB,
-	#superclass : #SpFileDatabase,
-	#category : 'BookmarkMagic-Persistence'
+	#name : 'BookmarkMagicDB',
+	#superclass : 'SpFileDatabase',
+	#category : 'BookmarkMagic-Persistence',
+	#package : 'BookmarkMagic',
+	#tag : 'Persistence'
 }
 
-{ #category : #'override in subclasses' }
+{ #category : 'override in subclasses' }
 BookmarkMagicDB class >> backupDirectoryParent [
 
 	^ FileLocator dynabookData
 ]
 
-{ #category : #'override in subclasses' }
+{ #category : 'override in subclasses' }
 BookmarkMagicDB class >> schema [
 
 	^ { BmBookmarkFile }.

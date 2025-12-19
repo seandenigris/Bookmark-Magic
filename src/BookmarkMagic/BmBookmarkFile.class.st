@@ -1,33 +1,35 @@
 Class {
-	#name : #BmBookmarkFile,
-	#superclass : #Object,
+	#name : 'BmBookmarkFile',
+	#superclass : 'Object',
 	#instVars : [
 		'bookmarks'
 	],
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'BookmarkMagic-Core'
+	#category : 'BookmarkMagic-Core',
+	#package : 'BookmarkMagic',
+	#tag : 'Core'
 }
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 BmBookmarkFile class >> restoreFrom: anObject [
 
 	UniqueInstance := anObject.
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 BmBookmarkFile class >> spData [
 
 	^ UniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BmBookmarkFile class >> uniqueInstance [
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BmBookmarkFile >> addBookmarkTo: aUrl [
 
 	| bm |
@@ -37,13 +39,8 @@ BmBookmarkFile >> addBookmarkTo: aUrl [
 	^ self bookmarks add: bm
 ]
 
-{ #category : #accessing }
-BmBookmarkFile >> bookmarks [
-	^ bookmarks ifNil: [ bookmarks := SortedCollection new ]
-]
-
-{ #category : #'*BookmarkMagic-GToolkit' }
-BmBookmarkFile >> gtSpotterNewBookmarkFor: aSearch [
+{ #category : 'GT Search' }
+BmBookmarkFile >> bookmarkAddGtSearchFor: aSearch [
 	<gtSearch>
 	
 	^ aSearch explicit
@@ -61,8 +58,13 @@ BmBookmarkFile >> gtSpotterNewBookmarkFor: aSearch [
 		send: [ :result | self addBookmarkTo: result asUrl ]
 ]
 
-{ #category : #'*BookmarkMagic-GToolkit' }
-BmBookmarkFile >> gtViewBookmarksOn: aView [
+{ #category : 'accessing' }
+BmBookmarkFile >> bookmarks [
+	^ bookmarks ifNil: [ bookmarks := SortedCollection new ]
+]
+
+{ #category : 'GT Views' }
+BmBookmarkFile >> bookmarksGtViewOn: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Bookmarks' translated;
@@ -72,8 +74,13 @@ BmBookmarkFile >> gtViewBookmarksOn: aView [
 		column: 'Tags' text: [ :bm | String streamContents: [ :s | bm tags do: [ :t | s << t name ] separatedBy: [ s space ] ] ]
 ]
 
-{ #category : #'*BookmarkMagic-GToolkit' }
-BmBookmarkFile >> gtViewTagsOn: aView [
+{ #category : 'accessing' }
+BmBookmarkFile >> tags [
+	^ (self bookmarks flatCollect: #tags) as: Set
+]
+
+{ #category : 'GT Views' }
+BmBookmarkFile >> tagsGtViewOn: aView [
 	<gtView>
 
 	(self bookmarks isEmpty) ifTrue: [ ^ aView empty ].
@@ -87,9 +94,4 @@ BmBookmarkFile >> gtViewTagsOn: aView [
 				ifFalse: [ #() ] ];
 		itemText: #displayString;
 		actionUpdateButton
-]
-
-{ #category : #accessing }
-BmBookmarkFile >> tags [
-	^ (self bookmarks flatCollect: #tags) as: Set
 ]

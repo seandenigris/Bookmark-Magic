@@ -1,1 +1,1 @@
-Package { #name : #BookmarkMagic }
+Package { #name : 'BookmarkMagic' }
